@@ -1,16 +1,70 @@
-# fat_cat_app
+# 🐱 Fat Cat App
 
-Make your cat fit
+A mobile application to help monitor and manage your cat's food intake. 🍽️🐾
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📖 Description
 
-A few resources to get you started if this is your first Flutter project:
+**Fat Cat** is a Flutter-based mobile app designed to help cat owners track and manage their cats' daily food consumption. It helps prevent overfeeding and maintain a healthy diet for your feline friend. 🐈❤️
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ✨ Key Features
+
+- 🥫 Track daily food intake (wet and dry food)
+- ⚖️ Monitor feeding limits
+- 🚨 Visual warnings for overfeeding
+- 🎨 Simple and intuitive user interface
+- 📊 Daily food statistics
+
+---
+
+## 🛠️ Technical Specifications
+
+- **Framework:** Flutter
+- **Version:** 1.0.0+1
+- **Minimum Android SDK:** 21
+- **Dependencies:**
+    - `cupertino_icons: ^1.0.8`
+    - `http: ^1.1.0`
+    - `fl_chart: ^0.65.0`
+
+---
+
+## 📥 Installation
+
+1. Download the APK from the releases section.
+2. Install on Android device (Android 5.0 or higher).
+
+---
+
+## 💻 Development Setup
+
+```
+# Get dependencies
+flutter pub get
+
+# Run the app
+flutter run
+
+# Build release APK
+flutter build apk --release
+```
+
+---
+
+## 🔐 Required Permissions
+
+- Internet access 🌐
+
+---
+
+## 📝 Note
+
+This is a private application and is not published on pub.dev.  
+For more information about Flutter development, visit: https://flutter.dev/docs
+
+---
+
+
