@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../models/daily_food_summary.dart';
 import '../models/monthly_food_summary.dart';
-import '../services/api_service.dart';
+import '../services/firebase_service.dart';
 
 class FoodHistoryScreen extends StatefulWidget {
   const FoodHistoryScreen({super.key});
@@ -12,9 +12,8 @@ class FoodHistoryScreen extends StatefulWidget {
   State<FoodHistoryScreen> createState() => _FoodHistoryScreenState();
 }
 
-// lib/screens/food_history_screen.dart - modify the state class
 class _FoodHistoryScreenState extends State<FoodHistoryScreen> {
-  final _apiService = ApiService();
+  final _firebaseService = FirebaseService();
   late Future<List<DailyFoodSummary>> _dailySummaryFuture;
   late Future<List<MonthlyFoodSummary>> _monthlySummaryFuture;
 
@@ -26,8 +25,8 @@ class _FoodHistoryScreenState extends State<FoodHistoryScreen> {
   @override
   void initState() {
     super.initState();
-    _dailySummaryFuture = _apiService.getDailyFoodSummary();
-    _monthlySummaryFuture = _apiService.getMonthlyFoodSummary();
+    _dailySummaryFuture = _firebaseService.getDailyFoodSummary();
+    _monthlySummaryFuture = _firebaseService.getMonthlyFoodSummary();
   }
 
   @override

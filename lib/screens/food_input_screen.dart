@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/food_entry.dart';
 import '../models/daily_food_summary.dart';
-import '../services/api_service.dart';
+import '../services/firebase_service.dart';
 
 class FoodInputScreen extends StatefulWidget {
   const FoodInputScreen({super.key});
@@ -14,7 +14,7 @@ class _FoodInputScreenState extends State<FoodInputScreen> {
   final _formKey = GlobalKey<FormState>();
   final _dryFoodController = TextEditingController();
   final _wetFoodController = TextEditingController(text: "0");
-  final _apiService = ApiService();
+  final _firebaseService = FirebaseService();
 
   DailyFoodSummary? _todaySummary;
   bool _isLoading = true;
@@ -28,7 +28,7 @@ class _FoodInputScreenState extends State<FoodInputScreen> {
   Future<void> _loadTodaySummary() async {
     setState(() => _isLoading = true);
     try {
-      final summary = await _apiService.getTodaySummary();
+      final summary = await _firebaseService.getTodaySummary();
       setState(() {
         _todaySummary = summary;
         _isLoading = false;
@@ -219,7 +219,7 @@ class _FoodInputScreenState extends State<FoodInputScreen> {
       );
 
       try {
-        await _apiService.addFoodEntry(entry);
+        await _firebaseService.addFoodEntry(entry);
         await _loadTodaySummary();
         setState(() {
           _dryFoodController.clear();
