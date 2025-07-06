@@ -30,8 +30,11 @@ A mobile application to help monitor and manage your cat's food intake. 🍽️�
 - **Minimum Android SDK:** 21
 - **Dependencies:**
     - `cupertino_icons: ^1.0.8`
-    - `http: ^1.1.0`
-    - `fl_chart: ^0.65.0`
+    - `firebase_core: ^3.15.1`
+    - `cloud_firestore: ^5.6.11`
+    - `firebase_auth: ^5.6.2`
+    - `firebase_messaging: ^15.2.9`
+    - `flutter_local_notifications: ^19.3.0`
 
 ---
 
