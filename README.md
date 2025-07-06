@@ -17,6 +17,9 @@ A mobile application to help monitor and manage your cat's food intake. 🍽️�
 - 🚨 Visual warnings for overfeeding
 - 🎨 Simple and intuitive user interface
 - 📊 Daily food statistics
+- 💾 Firebase Integration for data storage
+- 🔔 Push Notifications support
+- 🔄 Real-time data synchronization
 
 ---
 
@@ -41,6 +44,14 @@ A mobile application to help monitor and manage your cat's food intake. 🍽️�
 
 ## 💻 Development Setup
 
+### Prerequisites
+
+1. Flutter SDK
+2. Firebase Project Setup
+   - Create a new Firebase project
+   - Download `google-services.json`
+   - Place it in `android/app/` directory
+
 ```
 # Get dependencies
 flutter pub get
@@ -57,6 +68,19 @@ flutter build apk --release
 ## 🔐 Required Permissions
 
 - Internet access 🌐
+- Notification permissions 🔔
+- Post notifications (Android) 📳
+- Background services 🔄
+
+---
+
+## ⚙️ Firebase Configuration
+
+1. Create a new Firebase project at [Firebase Console](https://console.firebase.google.com)
+2. Add an Android app to your Firebase project
+3. Download the `google-services.json` file
+4. Place the file in `android/app/` directory
+5. Run the app to verify Firebase integration
 
 ---
 
@@ -66,5 +90,3 @@ This is a private application and is not published on pub.dev.
 For more information about Flutter development, visit: https://flutter.dev/docs
 
 ---
-
-
