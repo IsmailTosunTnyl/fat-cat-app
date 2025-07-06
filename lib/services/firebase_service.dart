@@ -92,30 +92,29 @@ class FirebaseService {
     }
   }
 
-  Future<DailyFoodSummary> getTodaySummary() async {
+  Future<DailyFoodSummary> getTodaySummary({DateTime? selectedDate}) async {
     try {
-      final now = DateTime.now();
-      final today = DateTime(now.year, now.month, now.day);
+      final queryDate = selectedDate ?? DateTime.now();
+      final startOfDay = DateTime(queryDate.year, queryDate.month, queryDate.day);
+      final endOfDay = DateTime(queryDate.year, queryDate.month, queryDate.day, 23, 59, 59);
 
       final QuerySnapshot snapshot = await _firestore
           .collection('food_entries')
-          .where('date', isGreaterThanOrEqualTo: today)
+          .where('date', isGreaterThanOrEqualTo: startOfDay)
+          .where('date', isLessThanOrEqualTo: endOfDay)
           .get();
 
-      double totalDryFood = 0;
-      int totalWetFood = 0;
+      final summaryBuilder = DailyFoodSummaryBuilder(dateTime: startOfDay);
 
       for (var doc in snapshot.docs) {
         final data = doc.data() as Map<String, dynamic>;
-        totalDryFood += data['dry_food_amount'].toDouble();
-        totalWetFood += data['wet_food_count'] as int;
+        summaryBuilder.addEntry(
+          data['dry_food_amount'].toDouble(),
+          data['wet_food_count'] as int,
+        );
       }
 
-      return DailyFoodSummary(
-        dateTime: today,
-        totalDryFoodGrams: totalDryFood,
-        totalWetFoodCount: totalWetFood,
-      );
+      return summaryBuilder.build();
     } catch (e) {
       throw Exception('Firebase error: $e');
     }

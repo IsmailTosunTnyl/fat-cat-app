@@ -1,6 +1,7 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'screens/food_history_screen.dart';
 import 'screens/food_input_screen.dart';
 import 'services/notification_service.dart';
@@ -27,6 +28,16 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('tr', 'TR'),
+        Locale('en', 'US'),
+      ],
+      locale: const Locale('tr', 'TR'),
       home: const MainScreen(),
     );
   }

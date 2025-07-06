@@ -15,6 +15,7 @@ class _FoodInputScreenState extends State<FoodInputScreen> {
   final _dryFoodController = TextEditingController();
   final _wetFoodController = TextEditingController(text: "0");
   final _firebaseService = FirebaseService();
+  DateTime _selectedDate = DateTime.now();
 
   DailyFoodSummary? _todaySummary;
   bool _isLoading = true;
@@ -25,10 +26,27 @@ class _FoodInputScreenState extends State<FoodInputScreen> {
     _loadTodaySummary();
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime now = DateTime.now();
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: now.subtract(const Duration(days: 7)),
+      lastDate: now,
+      locale: const Locale('tr', 'TR'),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+      _loadTodaySummary();
+    }
+  }
+
   Future<void> _loadTodaySummary() async {
     setState(() => _isLoading = true);
     try {
-      final summary = await _firebaseService.getTodaySummary();
+      final summary = await _firebaseService.getTodaySummary(selectedDate: _selectedDate);
       setState(() {
         _todaySummary = summary;
         _isLoading = false;
@@ -125,6 +143,20 @@ class _FoodInputScreenState extends State<FoodInputScreen> {
             child: Column(
               children: [
                 _buildSummaryCard(),
+                const SizedBox(height: 16),
+                Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.calendar_today),
+                    title: Text(
+                      '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    trailing: TextButton(
+                      onPressed: () => _selectDate(context),
+                      child: const Text('Tarih Seç'),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _dryFoodController,
@@ -213,7 +245,7 @@ class _FoodInputScreenState extends State<FoodInputScreen> {
       final wetCount = int.parse(_wetFoodController.value.text);
 
       final entry = FoodEntry(
-        date: DateTime.now(),
+        date: _selectedDate,
         dryFoodAmount: dryAmount,
         wetFoodCount: wetCount,
       );
@@ -225,6 +257,11 @@ class _FoodInputScreenState extends State<FoodInputScreen> {
           _dryFoodController.clear();
           _wetFoodController.text = "0";
         });
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Mama kaydı başarıyla eklendi')),
+          );
+        }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
