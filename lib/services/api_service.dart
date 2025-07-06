@@ -1,4 +1,4 @@
-// lib/services/api_service.dart
+// lib/services/api_service.dart (legacy code for API calls, not using Firebase)
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/daily_food_summary.dart';
@@ -6,7 +6,7 @@ import '../models/food_entry.dart';
 import '../models/monthly_food_summary.dart';
 
 class ApiService {
-  // its better to use a constant for the base URL
+  // base URL for API calls
   static const String baseUrl = 'http://sony.local:9000';
 
   Future<void> addFoodEntry(FoodEntry entry) async {
@@ -18,9 +18,9 @@ class ApiService {
       );
 
       if (response.statusCode != 201 && response.statusCode != 200) {
-        // showing all error content is not a good practice in production, but useful for debugging :D
+        // showing error content for debugging
         throw Exception(
-          'Başaramadık: ${response.statusCode} - ${response.body}',
+          'Failed: ${response.statusCode} - ${response.body}',
         );
       }
     } catch (e) {
@@ -77,10 +77,10 @@ class ApiService {
         final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
         return DailyFoodSummary.fromJson(jsonResponse);
       } else {
-        throw 'Günlük veri alınamadı: ${response.statusCode} - ${response.body}';
+        throw 'Failed to get daily data: ${response.statusCode} - ${response.body}';
       }
     } catch (e) {
-      throw 'Günlük veri alınamadı: $e';
+      throw 'Failed to get daily data: $e';
     }
   }
 }

@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/food_history_screen.dart';
 import 'screens/food_input_screen.dart';
+import 'services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  // Initialize notification service
+  final notificationService = NotificationService();
+  await notificationService.initialize();
+
   runApp(const MyApp());
 }
 
@@ -55,10 +61,12 @@ class _MainScreenState extends State<MainScreen> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.add_box),
+            // footer for the first screen,
             label: 'Mama Girişi',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
+            // footer for the second screen,
             label: 'Geçmiş',
           ),
         ],
